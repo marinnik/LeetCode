@@ -1,0 +1,66 @@
+Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.
+
+Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+
+ 
+
+Example 1:
+
+Input: x = 123
+Output: 321
+Example 2:
+
+Input: x = -123
+Output: -321
+Example 3:
+
+Input: x = 120
+Output: 21
+_________________________________________
+
+
+class Solution {
+public:
+    int reverse(int x) {
+        
+        if (x == 0)
+	{
+		return x;
+	}
+	bool isNegative = false;
+	if (x < 0)
+	{
+		isNegative = true;
+		x = abs(x);
+	}
+
+	string s;
+	string revX;
+
+	std::stringstream sStr;
+	sStr << x;
+	sStr >> s;
+
+	for (int i = s.length() - 1; i >= 0; --i)
+	{
+		revX += s[i];
+	}
+    try
+	{
+		x = stoi(revX);
+	}
+	catch (const std::exception&)
+	{
+		return 0;
+	}
+	if (isNegative)
+	{
+		return x * (-1);
+	}
+	else
+	{
+		return x;
+	}
+
+    }
+};

@@ -1,0 +1,105 @@
+Given two binary strings a and b, return their sum as a binary string.
+
+ 
+
+Example 1:
+
+Input: a = "11", b = "1"
+Output: "100"
+Example 2:
+
+Input: a = "1010", b = "1011"
+Output: "10101"
+ 
+_________________________________
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        string ans, revAns;
+	bool isTransfered = false;
+	int aLn = a.length() - 1, bLn = b.length() - 1;
+	
+	while (aLn >= 0 && bLn >= 0)
+	{
+		if (a[aLn] == '0' || b[bLn] == '0')
+		{
+			if (a[aLn] == '1' || b[bLn] == '1')
+			{
+				if (!isTransfered) ans += '1';
+				else
+				{
+					ans += '0';
+					isTransfered = true;
+				}
+			}
+			else
+			{
+				if (!isTransfered) ans += '0';
+				else
+				{
+					ans += '1';
+					isTransfered = false;
+				}
+			}
+		}
+		else
+		{
+			if (isTransfered) ans += '1';
+			else
+			{
+				ans += '0';
+				isTransfered = true;
+			}
+		}
+		--aLn;
+		--bLn;
+	}
+	if (aLn < 0)
+	{
+		while (bLn >= 0)
+		{
+			if (isTransfered)
+			{
+				if (b[bLn] == '1') ans += '0';
+				else
+				{
+					ans += '1';
+					isTransfered = false;
+				}
+			}
+			else
+			{
+				ans += b[bLn];
+			}
+			--bLn;
+		}
+	}
+	else
+	{
+		while (aLn >= 0)
+		{
+			if (isTransfered)
+			{
+				if (a[aLn] == '1') ans += '0';
+				else
+				{
+					ans += '1';
+					isTransfered = false;
+				}
+			}
+			else
+			{
+				ans += a[aLn];
+			}
+			--aLn;
+		}
+	}
+	if (isTransfered) ans += '1';
+	for (int i = ans.length()-1; i >=0; --i)
+	{
+		revAns += ans[i];
+	}
+	return revAns;
+
+    }
+};
